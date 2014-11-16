@@ -1,0 +1,80 @@
+\documentclass[12pt]{book}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb, amsmath, amsfonts}
+\usepackage{xargs}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+\title{Ideas Unthinkable}
+\author{Sandy Maguire}
+\date{\today}
+
+\newcommand{\difficult}{}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=purple,backgroundcolor=purple!25,bordercolor=purple,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+\renewcommand{\cite}[1]{}
+
+
+
+\begin{document} \maketitle
+
+\chapter{Introduction}
+Iktsuarpok is an Inuit word which roughly translates in English to "the frustration of waiting for someone to turn up."
+Think about that feeling; it's something you're almost certainly familiar with, but, I'd suspect, never in the sense of
+iktsuarpok. You probably categorized the feeling as "frustration" or "irritability", both of which are close, but
+neither of which is as accurate as iktusarpok. English doesn't really have a word for this feeling, but somehow, we
+manage to get by. Our existing words do a adequate-enough job of expressing our emotions, and so we don't see the need
+to spend the effort finding and spreading a new word just for this purpose.
+
+The Sapir-Whorf hypothesis\improvement{Be more science-y here}(or linguistic relativism), a theory widely considered
+to be true by scholars of linguistics, states that the language you speak influences the thoughts you can have. For a
+particularly illustrating example of this hypothesis, quickly think to yourself which direction is south-west relative
+to you right this instant.  Unless you have recently looked at a map, your orienteering isn't likely to be very
+accurate. Humans, it would seem, do not have very good internal compasses. However, this claim turns out to have very
+few legs to stand on indeed; the Australian Aboriginal people the Guugu Yimithirr
+\cite{http://en.wikipedia.org/wiki/Relative_direction} have no issue with this task whatsoever, and the reason why is
+quite illuminating: they do not have words for "left" or "right". When asking a Guugu Yimithirr which hand he writes
+with, he might respond with "my Eastern-most hand." The fact that their language lacks words for relative directions
+means that the Guugu Yimithirr need an alternative means of describing direction, and so they instead keep track
+mentally of the cardinal directions to provide the same purpose.
+
+Isn't it quite remarkable to realize that, of all of the \unsure{is this number accurate?}millions of words in the
+English language, there still exist ideas that are difficult to express? Ideas that would take so long to describe that
+by the time you got to the end of your sentence, people would have forgotten the beginning? Linguistic relativism
+implies that this indeed must be the case; that there are thoughts English is poorly adapted to handle.
+
+\improvement{I don't like the way this is worded.}That's What this book is for; to teach you a language capable of
+expressing the ideas you never even knew were inexpressible. As it turns out, these ideas are \textit{profoundly
+powerful}; they are the reason that engineers and computer programmers are so highly paid. Unfortunately, as it is with
+all things, we must learn to walk before we can run. It is an inescapable consequence of this that a lot of the ideas
+will seem obvious at first, but that is only because you have had decades of practice with your current thinking
+patterns.
+
+I liken the experience of this as similar to learning to ride a bicycle\todo{maybe a car analogy would make more sense}.
+When you first start, you're not any good at it, and every time you get on there is a non-zero chance that you will end
+up hurting yourself. For all intents and purposes, early on, it's easier to get where you're going by walking than by
+riding your bicycle. However, once you've gotten familiar with the bike, and have learned to not fall over, even in the
+absence of your training wheels, you're more mobile than ever before. I think this is a fair metaphor for what we're
+trying to do here. Give this book the benefit of the doubt; just because your current system works better at first,
+doesn't necessarily it will be better in the long run.\improvement{this sounds patronizing}
+
+\section{Things I want to say that I stole from that stats book}
+We have tried to write this book in an intuitive fashion, emphasizing concepts rather than mathematical details.
+The symbol \difficult indicates a technically difficult section, one that can be skipped without interrupting the flow
+of the discussion.
+
+
+
+\chapter{Spaces: The Language of Possibilities}
+\chapter{Types: The Language of Structure}
+\chapter{Algorithms: The Language of Decision}
+\chapter{Monads: The Language of Progression}
+\chapter{Isomorphisms: The Language of Identity}
+\chapter{Asymptotes: The Language of Refinement}
+
+
+\end{document}
+
