@@ -2,6 +2,7 @@
 
 \usepackage[margin=1in]{geometry}
 \usepackage{amssymb, amsmath, amsfonts}
+\usepackage{titlecaps}
 \usepackage{xargs}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 
@@ -12,9 +13,14 @@
 \newcommand{\difficult}{}
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
-\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=green,backgroundcolor=green!25,bordercolor=green,#1]{#2}}
 \newcommandx{\improvement}[2][1=]{\todo[linecolor=purple,backgroundcolor=purple!25,bordercolor=purple,#1]{#2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+\newcommand{\aside}[1]{#1}
+\renewcommand{\value}[1]{\textit{#1}}
+\newcommand{\type}[1]{\texttt{#1}}
+\newcommand{\what}{}
+\newcommand{\defn}[2]{\renewcommand{\what}{#1}\textbf{Definition "\titlecap{#1}":} #2}
 \renewcommand{\cite}[1]{}
 
 
@@ -70,6 +76,51 @@ of the discussion.
 
 \chapter{Spaces: The Language of Possibilities}
 \chapter{Types: The Language of Structure}
+\section{Motivation}
+At its core, computation\info{and all of the things that go along with it} really nothing more than a series of
+transformations from one thing to another, and from the result of that transformation to something further along. This
+is pretty easy to observe in the real world; every firm involved in manufacturing chain is a good example. The mining
+corporations transform the raw earth into crude materials, which are then taken by the chemical engineers and
+transformed into refined materials. These refined materials are sold to factories, which transform them into assembled
+goods, and will usually sell them to other factories to make other assembled goods. Each individual organization
+provides one individual piece of the overall manufacturing transformation -- the whole of which is made up of nothing
+but the individual pieces. The structure of a transformation is recursive: it is made up of smaller transformations, and
+makes up larger ones.\improvement{Drive in the point that this goes further in both directions: eg. every person at an
+organization is responsible to transform their pay into something valuable for the company.}
+
+In fact, one might be tempted to view ones own life as a transformation, from what they were born with to what they want
+to do with it. Though human-level problems are unfortunately all-too-often too complicated for our
+mathematical\unsure{do we want to use this word?} tools, taking this view is likely apt to help people find their
+way.\change{blegh. not sure this is thematically appropriate}
+
+However, in order to study large transformations of any value whatsoever, we must first present ourselves with toy
+problems and analyze how they work, trusting that our discoveries will be useful when dealing with more complicated
+examples. It is hard to perform a transformation if you are uncertain about what it is you're working with. The study of
+types is thus the necessary bookkeeping of \textit{what we're dealing with} and \textit{what we can do with it}. The
+reader is encouraged to thoroughly understand (and ideally, have internalized) this chapter before proceeding, as the
+remainder of the book builds heavily upon it.
+
+
+\section{Types and Values}
+The study of types is motivated as a necessary component of studying \textit{values}, and as such, it would seem to make
+sense to first consider values.
+
+\defn{value}{A \what is a particular noun, i.e. it's a thing that exists.}
+
+\aside{Such a definition seems unnecessarily vague, but this is in fact intentional, and, as we will see, rather
+characteristic of most of the definitions in this book. The concepts we are trying to learn words for are purposefully
+vague; we are attempting to build mental scaffolding that works regardless of what in question we are thinking about.}
+
+For the time being, we will consider values to be things that exist in the real world, things you can physically
+experience. For example, my copy of \value{Crime and Punishment} is a value. So is \value{George W. Bush}, and the color
+\value{brown}. The word \value{"Charlie"} is a value, and so is my friend \value{Charlie} -- but these two values are
+distinct from one another, for reasons that we will see shortly.
+
+$$
+\text{\texttt{Beverage}} \to \verb"Number"
+$$
+
+
 \chapter{Algorithms: The Language of Decision}
 \chapter{Monads: The Language of Progression}
 \chapter{Isomorphisms: The Language of Identity}
