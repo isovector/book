@@ -15,10 +15,13 @@
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
 \newcommandx{\info}[2][1=]{\todo[linecolor=green,backgroundcolor=green!25,bordercolor=green,#1]{#2}}
 \newcommandx{\improvement}[2][1=]{\todo[linecolor=purple,backgroundcolor=purple!25,bordercolor=purple,#1]{#2}}
+\newcommandx{\missing}[2][1=]{\todo[linecolor=purple,backgroundcolor=yellow!25,bordercolor=yellow,#1]{#2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 \newcommand{\aside}[1]{#1}
 \renewcommand{\value}[1]{\textit{#1}}
-\newcommand{\type}[1]{\text{\texttt{#1}}}
+\newcommand{\type}[1]{\ensuremath{\text{\texttt{#1}}}}
+\newcommand{\func}[1]{\ensuremath{\text{\texttt{#1}}}}
+\newcommand{\typeof}{\ensuremath{\text{ \texttt{::} }}}
 \newcommand{\what}{}
 \newcommand{\defn}[2]{\renewcommand{\what}{#1}\textbf{Definition "\titlecap{#1}":} #2}
 \renewcommand{\cite}[1]{}
@@ -77,6 +80,7 @@ of the discussion.
 \chapter{Spaces: The Language of Possibilities}
 \chapter{Types: The Language of Structure}
 \section{Motivation}
+\missing{mention how the point of this is to accurately constrain what we're talking about}
 At its core, computation\info{and all of the things that go along with it} really nothing more than a series of
 transformations from one thing to another, and from the result of that transformation to something further along. This
 is pretty easy to observe in the real world; every firm involved in manufacturing chain is a good example. The mining
@@ -119,10 +123,10 @@ distinct from one another, for reasons that we will see shortly.
 \defn{type}{A \what is an arbitrary category, grouping several values together by functional purpose.}
 
 Types are no more difficult of a concept to grasp than values were. A type is simply a classification which describes
-several different values. For example, $\type{Color}$ is a type with values \value{brown}, \value{green},
+several different values. For example, \type{Color} is a type with values \value{brown}, \value{green},
 \value{orange}, along with a slew of others whose enumeration is left as an exercise to the reader. \value{Cola} and
-\value{grape soda} are both values of type $\type{Soft Drink}$, but as a subtle point, they are also values of type
-$\type{Beverage}$ and also $\type{Liquid}$, because all soft drinks are beverages, and all beverages are liquids. A
+\value{grape soda} are both values of type \type{Soft Drink}, but as a subtle point, they are also values of type
+\type{Beverage} and also \type{Liquid}, because all soft drinks are beverages, and all beverages are liquids. A
 value can belong to many types.\change{make this not be an example of polymorphism}
 
 It is important to note that types don't \textit{really} exist in reality -- they exist only in our minds. While you can
@@ -131,33 +135,34 @@ most of us manage to live our everyday lives without belaboring this philosophic
 generalizations about "how to get ahead in your career" or the implications of a politician's economic
 policy.\improvement{come up with better examples here} A type is perhaps best thought of as distilling a concept down to
 its simplest form under which its properties are salient for the discussion at hand; if we are desperately looking for a
-place to sleep we will happily accept any value of type $\type{Bed}$, which distills the underlying piece of furniture
+place to sleep we will happily accept any value of type \type{Bed}, which distills the underlying piece of furniture
 into its most salient property: being sleepable-upon.
 
 As we saw earlier, as in the soft drink example, a value can belong to many types. When these types happen to be
-specific cases of more general types (for example, \value{cola} is of types $\type{Soft Drink}$, $\type{Beverage}$ and
-$\type{Liquid}$; but \textit{all} beverages are liquids, by definition), we call this "polymorphism", literally:
+specific cases of more general types (for example, \value{cola} is of types \type{Soft Drink}, \type{Beverage} and
+\type{Liquid}; but \textit{all} beverages are liquids, by definition), we call this "polymorphism", literally:
 being of many-form\unsure{is this true?}.
 
 \defn{polymorphism}{A value is said to be polymorphic to all of the types it's type is by definition.\change{this is a
-shitty definition that isn't going to help anyone}}
+shitty definition that isn't going to help anyone}}\missing{explicitly describe how we can replace any type with
+something which is polymorphic to it}
 
-That's a little wordy, so really what this means is that, because \value{Socrates} is of type $\type{Man}$, and all
-$\type{Man}$ are of type $\type{Mortal}$ by definition, \value{Socrates} is also of type $\type{Mortal}$. However, the
-converse is not true: which is to say, not all values of type $\type{Mortal}$ are of type $\type{Man}$ (for example,
+That's a little wordy, so really what this means is that, because \value{Socrates} is of type \type{Man}, and all
+\type{Man} are of type \type{Mortal} by definition, \value{Socrates} is also of type \type{Mortal}. However, the
+converse is not true: which is to say, not all values of type \type{Mortal} are of type \type{Man} (for example,
 \value{Mr. Ed}, the talking horse).
 
 The attentive reader will have noticed that if types can be polymorphic to other types, there is no solid ground we can
-stand on to state that \value{cola} should be an object of type $\type{Soft Drink}$, but \value{soft drink} should not
-be of type $\type{Beverage}$. Indeed, there is no such distinction between what should be considered a value and what a
+stand on to state that \value{cola} should be an object of type \type{Soft Drink}, but \value{soft drink} should not
+be of type \type{Beverage}. Indeed, there is no such distinction between what should be considered a value and what a
 type, as the procedure for assigning types to values is purely arbitrary.\improvement{this doesn't seem very clear} As
 such, we shall not bother ourselves too much with the philosophical issue of where the line between a value and a type
 should be drawn. We shall instead follow the rule of "the individual things we care about are values, while the
 collection of them as a whole is a type".
 
 An interesting consequence of this realization is that types themselves can have types, that is to say, there exists a
-type $\type{Type}$, whose values are types themselves. An example of a value of type $\type{Type}$ would be
-$\type{Color}$. This is not to say that any individual color is a type, but that the \textit{idea} of colors is itself a
+type \type{Type}, whose values are types themselves. An example of a value of type \type{Type} would be
+\type{Color}. This is not to say that any individual color is a type, but that the \textit{idea} of colors is itself a
 type. This kind of recursion certainly takes some getting used to, and is in fact the actual reason why we are
 developing type theory: so as to ensure we don't get confused when we are talking about several different layers of
 "meta" simultaneously.\footnote{It is the author's humble opinion that confusion of this sort is the primary reason why
@@ -170,10 +175,108 @@ same across all levels, namely that the larger of the two is made up of a collec
 better plox}
 
 Assuming the reader has followed us so far, it seems prudent to now mention a few interesting types. The first of which
-is $\type{Type}$, which we have already discussed. Another is $\type{Any}$, the type to which all values are
-polymorphic (i.e. absolutely everything is of type $\type{Any}$). The corollary to $\type{Any}$ is, of course,
-$\type{None}$, which has no values. The reason for this will be explored later.\change{it might make sense not to
+is \type{Type}, which we have already discussed. Another is \type{Any}, the type to which all values are
+polymorphic (i.e. absolutely everything is of type \type{Any}). The corollary to \type{Any} is, of course,
+\type{None}, which has no values. The reason for this will be explored later.\change{it might make sense not to
 introduce this until we need it.}
+
+
+\section{Functions}
+If values are the nouns of our newly formed language, functions are correspondingly the verbs. Functions are
+transformations from one type to another.
+
+\defn{function}{A \what is a transformation. It changes objects of one type into another.}
+
+An intuitive example is the function \func{buy}, which transforms \type{Money} into \type{Purchasable} (i.e.
+something which can be bought). Note that we are not talking about an individual transaction here; we are discussing the
+idea itself of purchasing. Symbolically, we will represent this function as:
+
+$$ \func{buy} \typeof \type{Money} \to \type{Purchasable} $$
+
+More generally, however, a function is always of the form:\improvement{it would be nice to have more examples here}
+
+$$ \func{function} \typeof \type{Type} \to \type{Type} $$
+
+We will call the type on the left of the arrow the "input" or "parameter" of the function, and the type on the right the
+"output" or "return type".
+
+And just when you thought these ideas couldn't get any more twisty than they already are, because we're discussing type
+theory, functions are not just transformations between types, they \textit{themselves} have types. Specifically, the
+function \func{buy} above is of type $\type{Money} \to \type{Purchasable}$. Types of this nature, we shall call
+"function types". You will notice the type of this function is just what we wrote after the \typeof symbol above.
+Indeed, for convenience, we shall henceforth use this symbol to mean "of type" in the remainder of this
+book.\improvement{combine this paragraph with the next.}
+
+Remember, all types are polymorphic to the type \type{Type} (which, we are now able to write as $\type{Type} \to
+\type{Type} \typeof \type{Type}$), and this includes function types themselves. By the rules of what it means to be
+polymorphic, there is nothing stopping us from writing functions of the form:
+
+$$ \func{hypothetical} \typeof \type{Input1} \to \type{Input2} \to \type{Output}$$
+
+For example, creating a great artistic masterpiece might be a function of type $\type{Time} \to \type{Energy} \to
+\type{Creativity} \to \type{Art}$. The right-most type in a chain of function arrows of this sort is always considered
+to be the output of the function, and with all others being inputs. In this case, creating great art requires time,
+energy and creativity.
+
+Functions are perhaps the most crucial subject\unsure{is this a substantiated claim?} covered in this
+book.\missing{discuss how just coming away with a strong understanding of this is enough to warrant considering the book
+a success}
+
+
+\section{Variable Types}
+As powerful as our type system already is, it quickly falls apart in some very common domains. As an illuminating
+example, let us consider how we might express the idea of a list in our language of types. For our purposes, we will
+define a list as a collection of zero-or-more things. A phone-book might be a list of \type{Name}s (with a size perhaps
+in the millions), while a shopping list could be a list of \type{purchasable}s (with a significantly smaller size). For
+simplicity, we will assume the only thing we might want to do to a list is to add an item to it, with a function
+$\func{addToList}$.
+
+It is clear that there should be some similarity between lists containing different types. In fact, the underlying type
+of the list is almost entirely unrelated to anything we might want to do with the list, with one key exception: adding
+items to the list.\change{make addToList closer to the next paragraph}
+
+How might we go about determining the type of \func{addToList}? There are two relatively obvious choices, one of which
+is to ignore the contents of the list entirely, substituting in our special type \type{Any}:
+
+$$ \func{addToList} \typeof \type{Any} \to \type{List} \to \type{List} $$
+
+or, alternatively, we could create multiple functions of the form:
+
+$$ \func{addToNameList} \typeof \type{Name} \to \type{NmaeList} \to \type{NameList} $$
+
+one for each type of list we might ever want.
+
+Unfortunately, neither of these solutions is very good. Using \type{Any} means we can create all of our list
+machinery once and only once, at the expense of losing the safety of our typing mechanism\todo{define this}. Due to the
+fact that \func{addToList} takes a parameter of type \type{Any}, some unscrupulous character might try to add a
+\type{Banana} to our phone book -- clearly nonsensical, but certainly allowed by the type system. Remember, the point of
+studying types is to ensure we don't do anything nonsensical.\missing{oh yeah, mention this earlier too! -- probably in
+motivation?}
+
+The solution to this problem is actually a combination of both methods. Instead of creating a variant of
+\func{addToList} for each type we might ever want, instead we will describe a \textit{rule for how to create such
+functions}. This has the benefit of only needing to be written once, but retaining type safety ensuring that we don't
+shoot ourselves in the foot. We thus redeclare \func{addToList} as follows:
+
+$$ \func{addToList} \typeof \type{A} \to \type{List[A]} \to \type{List[A]} $$
+
+where \type{A} is considered to be a value of type \type{Type}. We can consider this to be a rule to generate unique
+functions \func{addToList} for every possible type \type{A} imaginable by playing "mad libs" -- we will replace \type{A}
+with the type we care about. Our phone book from above can thus be considered of type \type{List[Name]}, while a bunch
+of bananas would be a \type{List[Banana]}, and it now being typedly-impossible to add a \type{Banana} to a
+\type{List[Name]}. We have successfully avoided shooting ourselves in the foot.
+
+We call such a construction to be a "variadic type", and it allows us to describe "containers" of types: additional
+structure on top of types which doesn't depend on the type it surrounds.
+
+\defn{variadic type}{A rule for creating types by substituting in types.\change{completely shit definition}}
+
+
+\section{Tuples}
+
+
+
+
 
 \chapter{Algorithms: The Language of Decision}
 \chapter{Monads: The Language of Progression}
