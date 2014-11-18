@@ -18,7 +18,7 @@
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 \newcommand{\aside}[1]{#1}
 \renewcommand{\value}[1]{\textit{#1}}
-\newcommand{\type}[1]{\texttt{#1}}
+\newcommand{\type}[1]{\text{\texttt{#1}}}
 \newcommand{\what}{}
 \newcommand{\defn}[2]{\renewcommand{\what}{#1}\textbf{Definition "\titlecap{#1}":} #2}
 \renewcommand{\cite}[1]{}
@@ -116,10 +116,64 @@ experience. For example, my copy of \value{Crime and Punishment} is a value. So 
 \value{brown}. The word \value{"Charlie"} is a value, and so is my friend \value{Charlie} -- but these two values are
 distinct from one another, for reasons that we will see shortly.
 
-$$
-\text{\texttt{Beverage}} \to \verb"Number"
-$$
+\defn{type}{A \what is an arbitrary category, grouping several values together by functional purpose.}
 
+Types are no more difficult of a concept to grasp than values were. A type is simply a classification which describes
+several different values. For example, $\type{Color}$ is a type with values \value{brown}, \value{green},
+\value{orange}, along with a slew of others whose enumeration is left as an exercise to the reader. \value{Cola} and
+\value{grape soda} are both values of type $\type{Soft Drink}$, but as a subtle point, they are also values of type
+$\type{Beverage}$ and also $\type{Liquid}$, because all soft drinks are beverages, and all beverages are liquids. A
+value can belong to many types.\change{make this not be an example of polymorphism}
+
+It is important to note that types don't \textit{really} exist in reality -- they exist only in our minds. While you can
+point to a specific grape, there is no magical property of "grapeness" floating out there in the universe. Fortunately,
+most of us manage to live our everyday lives without belaboring this philosophical point as we merrily talk in sweeping
+generalizations about "how to get ahead in your career" or the implications of a politician's economic
+policy.\improvement{come up with better examples here} A type is perhaps best thought of as distilling a concept down to
+its simplest form under which its properties are salient for the discussion at hand; if we are desperately looking for a
+place to sleep we will happily accept any value of type $\type{Bed}$, which distills the underlying piece of furniture
+into its most salient property: being sleepable-upon.
+
+As we saw earlier, as in the soft drink example, a value can belong to many types. When these types happen to be
+specific cases of more general types (for example, \value{cola} is of types $\type{Soft Drink}$, $\type{Beverage}$ and
+$\type{Liquid}$; but \textit{all} beverages are liquids, by definition), we call this "polymorphism", literally:
+being of many-form\unsure{is this true?}.
+
+\defn{polymorphism}{A value is said to be polymorphic to all of the types it's type is by definition.\change{this is a
+shitty definition that isn't going to help anyone}}
+
+That's a little wordy, so really what this means is that, because \value{Socrates} is of type $\type{Man}$, and all
+$\type{Man}$ are of type $\type{Mortal}$ by definition, \value{Socrates} is also of type $\type{Mortal}$. However, the
+converse is not true: which is to say, not all values of type $\type{Mortal}$ are of type $\type{Man}$ (for example,
+\value{Mr. Ed}, the talking horse).
+
+The attentive reader will have noticed that if types can be polymorphic to other types, there is no solid ground we can
+stand on to state that \value{cola} should be an object of type $\type{Soft Drink}$, but \value{soft drink} should not
+be of type $\type{Beverage}$. Indeed, there is no such distinction between what should be considered a value and what a
+type, as the procedure for assigning types to values is purely arbitrary.\improvement{this doesn't seem very clear} As
+such, we shall not bother ourselves too much with the philosophical issue of where the line between a value and a type
+should be drawn. We shall instead follow the rule of "the individual things we care about are values, while the
+collection of them as a whole is a type".
+
+An interesting consequence of this realization is that types themselves can have types, that is to say, there exists a
+type $\type{Type}$, whose values are types themselves. An example of a value of type $\type{Type}$ would be
+$\type{Color}$. This is not to say that any individual color is a type, but that the \textit{idea} of colors is itself a
+type. This kind of recursion certainly takes some getting used to, and is in fact the actual reason why we are
+developing type theory: so as to ensure we don't get confused when we are talking about several different layers of
+"meta" simultaneously.\footnote{It is the author's humble opinion that confusion of this sort is the primary reason why
+contemporary philosophy doesn't seem to get very far.}
+
+There is a conceptual shift here whose internalization is necessary before we can continue. The structure of values and
+types is recursive, and akin to the idea that the relationship between houses and cities is the same as the relationship
+between cities and states, which itself is the same as the idea between states and countries. The relationship is the
+same across all levels, namely that the larger of the two is made up of a collection of the smaller.\change{word this
+better plox}
+
+Assuming the reader has followed us so far, it seems prudent to now mention a few interesting types. The first of which
+is $\type{Type}$, which we have already discussed. Another is $\type{Any}$, the type to which all values are
+polymorphic (i.e. absolutely everything is of type $\type{Any}$). The corollary to $\type{Any}$ is, of course,
+$\type{None}$, which has no values. The reason for this will be explored later.\change{it might make sense not to
+introduce this until we need it.}
 
 \chapter{Algorithms: The Language of Decision}
 \chapter{Monads: The Language of Progression}
