@@ -5,12 +5,20 @@
 \usepackage{titlecaps}
 \usepackage{xargs}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage{tikz-cd}
+\usepackage{graphicx}
+
+\newcommand{\cdr}[1]{\arrow[swap]{r}{#1}}
+\newcommand{\cdl}[1]{\arrow{l}{#1}}
+\newcommand{\cdd}[1]{\arrow{d}{#1}}
+\newcommand{\cdu}[1]{\arrow{u}{#1}}
 
 \title{Ideas Unthinkable}
 \author{Sandy Maguire}
 \date{\today}
 
 \newcommand{\difficult}{}
+\newcommand{\subtitle}[1]{}
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
 \newcommandx{\info}[2][1=]{\todo[linecolor=green,backgroundcolor=green!25,bordercolor=green,#1]{#2}}
@@ -18,7 +26,7 @@
 \newcommandx{\missing}[2][1=]{\todo[linecolor=purple,backgroundcolor=yellow!25,bordercolor=yellow,#1]{#2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 \newcommand{\aside}[1]{#1}
-\renewcommand{\value}[1]{\textit{#1}}
+\renewcommand{\value}[1]{\ensuremath{\text{\textit{#1}}}}
 \newcommand{\type}[1]{\ensuremath{\text{\texttt{#1}}}}
 \newcommand{\tuptype}[1]{\type{(#1)}}
 \newcommand{\func}[1]{\ensuremath{\text{\texttt{#1}}}}
@@ -28,16 +36,145 @@
 \newcommand{\exprob}[2]{\textbf{Problem:} #1 \\ \rule{\textwidth}{1pt} \\ \textbf{Solution:} #2 \\}
 \newcommand{\lesson}[1]{\textbf{Lesson:} #1}
 \renewcommand{\cite}[1]{}
+\newcommand{\coord}[1]{(#1)}
+\newcommand{\fig}[3]{
+    \begin{center}
+    \includegraphics[scale=#3]{#1} \\
+    #2 \\
+    \end{center}
+%    \label{fig:awesome_image}
+}
 
+\includeonly{}
 
 
 \begin{document} \maketitle
 
 \include{introduction}
+\chapter{Recursion}
+A central theme of this book is one of \textit{structure}. By that, we mean that a primary interest is describing
+the structure of \textit{things} in a systematic way. One of the most elegant patterns of structure is that of
+recursion: things described in terms of themselves. Most of the concepts in this book can be described thusly, so it
+seems fitting that we study recursion itself as motivating introduction both to the \textit{kinds of things} this book
+will be exploring, and furthermore as a strong foundation itself.\improvement{not a beautiful sentence}
 
-\chapter{Spaces: The Language of Possibilities}
+\section{Introduction}
+\fig{recursion/monalisa.jpg}{A picture of the Mona Lisa holding the same picture.}{0.75}
+My first encounter with the idea of recursion was on the cover of comic book my father had lying around our library when
+I was a boy. The cover featured the main character reading a copy of the comic book that \textit{I} was reading. Clearly
+visible on the cover of his book was \textit{him reading the same book}. My eight-year-old mind wasn't entirely capable
+of comprehending what was happening, and I spent a significant amount of my childhood wondering about how such a thing
+could possibly make exist. Of course, the book could exist because the cover in the cover of the cover was so small that
+the human eye couldn't possibly make it out, so the artist could stop drawing, his job being complete.\unsure{maybe
+describe the mona lisa instead?}
 
+This fact, of course, is merely one of pragmatics. With a powerful enough imagination, you realize that there is nothing
+\textit{in principle} which stops progressively smaller copies of my comic book protagonist from reading his own book,
+in a series which \textit{never ever stops}.
+
+
+
+
+\chapter{Information}
 \include{types}
+
+\chapter{Spaces}
+\subtitle{The Language of Possibilities}
+\subtitle{The Language of Low Structure}
+\section{Motivation}
+Types give us a strong language to ensure we're talking about the things we want to be talking about. They stop us from
+doing stupid and nonsensical things, like comparing \type{Human}s and \type{Apple}s. However, from the point of view
+of the type system, all people are created equal--they are all completely interchangeable with one another. While this
+might be nice from an idealistic perspective, our personal experience describes all too well how your boss and
+significant other are \textit{very different} from one another, despite the fact that they are both of type
+\type{Human}. While types give us the ability to distinguish between different kinds of things, the language of spaces
+is that of the differences between members of the same type. While types tell us how things are the same, spaces tell us
+\textit{how things are different}.\change{this is a little rambling}
+
+Having a strong grasp of what spaces are (and how they can be manipulated) will bestow upon you the ability to
+identify specific values of a given type, find common features between them which is invisible to the type system, and
+consider possibilities that you have never seen before.
+
+
+\section{A Gentle Introduction}
+Consider a map of the Earth. Given a latitude and longitude, you can accurately describe any location on the planet. You
+might not be marveling now, but humanity didn't figure out coordinate systems until around the 17th
+century\footnote{Although there is some evidence of the ancient Greeks using something roughly isomorphic to coordinate
+systems.}--several centuries after\unsure{write something here to tie that into context}. Latitude and longitude are
+just numbers, relative to a starting point defined only by fiat (the equator and prime meridian, respectively). Thus, a
+coordinate of the Earth is a value of type $\type{Number}^2$. The coordinate at the equator and prime meridian we will
+label as "the origin" and arbitrarily say is \coord{0,0}.
+
+
+
+$$\begin{tikzcd}
+A \arrow[swap]{dr}{f} \cdr{i_1} & A + B \arrow[dashed]{d}{s} & \cdl{i_2} \arrow{dl}{g} B \\
+\phantom{} & X &
+\end{tikzcd}$$\change{this shouldn't be here}
+
+\section{Vectors}
+\section{Bases}
+In our map example, the two coordinates we used to describe the space were latitude and longitude--more precisely, a
+vector pointing along the north-south axis, \coord{0,1}, and one pointing along the west-east axis, \coord{1,0}.
+However, this is simply a matter of convention, there is no reason we couldn't have used one along the
+northwest-southeast axis, \coord{1,1}, and another along northeast-southwest, \coord{1,-1}. In fact, we could even use
+one pointing north, \coord{0,1} and one pointing north-north-east, \coord{$\frac{1}{4}$,1}. As it turns out, for our
+map example, any two vectors will satisfy\footnote{Conceptually, at least. Actually \textit{using} these systems would
+be exceptionally frustrating, though possible in principle,} us as a coordinate-system, so long as they are not both
+pointing in the same direction.  It does us no good to have two coordinates which are both north-south, because we wold
+never be able to describe what "east" was.\todo{we need to talk about vectors before this}
+
+The arbitrary vectors we choose as our coordinates form what is known as a \textit{basis}.
+
+\defn{basis}{A basis of a space is a set of vectors which act as the coordinate system. A choice of basis is completely
+arbitrary, though different bases will make salient different features of the space, as we will see later. In general,
+an $n$-dimensional space requires a basis consisting of $n$ vectors.}
+
+While the north and west vectors are arbitrary choices for the basis of our map, it turns out there is a good reason for
+why we might choose them, which we will discuss later in the section on projections\todo{get the reference for
+Spaces::Projections}.
+
+\subsection{Color in RGB-space}
+While the choice of a basis is arbitrary, different bases can show interesting features in the underlying space. To
+drive home this point\improvement{diction, please.}, let us consider \textit{color-space}--the space of colors. As you
+might imagine, in color-space, we can use coordinates to describe different colors. In fact, this is how computers
+represent colors, so we can rest assured that we're not just making things up.
+
+If you recall your early childhood education, there are three primary colors--colors which can't be made up of other
+colors. In contrast, all other colors can be made by mixing the primary colors together in different proportions. This
+should set off the mental bells in your mind: this is a perfect example of a space! In fact, our basis can simply be
+these primary colors, with coordinates being a percentage between 0\% and 100\%, with 0\% meaning there is none of the
+color present, and 100\% being as much as possible. In the additive color model (how lights form colors, rather than how
+paint forms color), the three primary colors are \value{red}, \value{green} and \value{blue} (or RGB for short). Thus,
+we shall describe our basis to be the three vectors:
+
+\begin{align*}
+    \value{red:}   & \qquad \coord{100,0,0} \\
+    \value{green:} & \qquad \coord{0,100,0} \\
+    \value{blue:}  & \qquad \coord{0,0,100}
+\end{align*}
+
+\fig{spaces/rgb.png}{An illustration of RGB-space.\todo{find a better image or something maybe even cite this yolo
+swag}}{0.25}
+
+You'll notice that colors which look similar to one another are close to one another in RGB-space. This is a phenomenon
+known as clustering--similar colors have nearby coordinates. We will study clustering in more detail later.
+
+
+\subsection{Color in HSV-space}
+
+\section{Projections}
+
+\section{Clustering}
+
+
+
+\section{Searching}
+
+
+
+
+
 
 \chapter{Algorithms: The Language of Decision}
 \chapter{Monads: The Language of Progression}
