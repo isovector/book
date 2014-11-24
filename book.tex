@@ -7,6 +7,7 @@
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage{tikz-cd}
 \usepackage{graphicx}
+\usetikzlibrary{decorations.pathmorphing}
 
 \newcommand{\cdr}[1]{\arrow[swap]{r}{#1}}
 \newcommand{\cdl}[1]{\arrow{l}{#1}}
@@ -26,16 +27,18 @@
 \newcommandx{\missing}[2][1=]{\todo[linecolor=purple,backgroundcolor=yellow!25,bordercolor=yellow,#1]{#2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 \newcommand{\aside}[1]{#1}
+\newcommand{\subtle}[1]{\textbf{Important note:} #1 \\ }
 \renewcommand{\value}[1]{\ensuremath{\text{\textit{#1}}}}
 \newcommand{\type}[1]{\ensuremath{\text{\texttt{#1}}}}
 \newcommand{\tuptype}[1]{\type{(#1)}}
 \newcommand{\func}[1]{\ensuremath{\text{\texttt{#1}}}}
 \newcommand{\typeof}{\ensuremath{\text{ \texttt{::} }}}
 \newcommand{\what}{}
-\newcommand{\defn}[2]{\renewcommand{\what}{#1}\textbf{Definition "\titlecap{#1}":} #2}
+\newcommand{\defn}[2]{\renewcommand{\what}{#1 }\textbf{Definition ``\titlecap{#1}'':} #2}
 \newcommand{\exprob}[2]{\textbf{Problem:} #1 \\ \rule{\textwidth}{1pt} \\ \textbf{Solution:} #2 \\}
 \newcommand{\lesson}[1]{\textbf{Lesson:} #1}
 \renewcommand{\cite}[1]{}
+\newcommand{\foreign}[1]{\textit{#1}}
 \newcommand{\coord}[1]{(#1)}
 \newcommand{\fig}[3]{
     \begin{center}
@@ -103,12 +106,12 @@ century\footnote{Although there is some evidence of the ancient Greeks using som
 systems.}--several centuries after\unsure{write something here to tie that into context}. Latitude and longitude are
 just numbers, relative to a starting point defined only by fiat (the equator and prime meridian, respectively). Thus, a
 coordinate of the Earth is a value of type $\type{Number}^2$. The coordinate at the equator and prime meridian we will
-label as "the origin" and arbitrarily say is \coord{0,0}.
+label as ``the origin'' and arbitrarily say is \coord{0,0}.
 
 
 
 $$\begin{tikzcd}
-A \arrow[swap]{dr}{f} \cdr{i_1} & A + B \arrow[dashed]{d}{s} & \cdl{i_2} \arrow{dl}{g} B \\
+A \arrow[swap]{dr}{f} \cdr{i_1} & A + B \arrow[squiggly]{d}{s} & \cdl{i_2} \arrow{dl}{g} B \\
 \phantom{} & X &
 \end{tikzcd}$$\change{this shouldn't be here}
 
@@ -122,7 +125,7 @@ one pointing north, \coord{0,1} and one pointing north-north-east, \coord{$\frac
 map example, any two vectors will satisfy\footnote{Conceptually, at least. Actually \textit{using} these systems would
 be exceptionally frustrating, though possible in principle,} us as a coordinate-system, so long as they are not both
 pointing in the same direction.  It does us no good to have two coordinates which are both north-south, because we wold
-never be able to describe what "east" was.\todo{we need to talk about vectors before this}
+never be able to describe what ``east'' was.\todo{we need to talk about vectors before this}
 
 The arbitrary vectors we choose as our coordinates form what is known as a \textit{basis}.
 
@@ -162,24 +165,125 @@ known as clustering--similar colors have nearby coordinates. We will study clust
 
 
 \subsection{Color in HSV-space}
-
 \section{Projections}
-
 \section{Clustering}
-
-
-
 \section{Searching}
-
-
-
-
-
 
 \chapter{Algorithms: The Language of Decision}
 \chapter{Monads: The Language of Progression}
 \chapter{Isomorphisms: The Language of Identity}
 \chapter{Asymptotes: The Language of Refinement}
+
+\chapter{Categories}
+\subtitle{The Language of Metaphor}
+The notion of a category is one deceptively difficult to wrap one's mind around. It is the author's opinion that this is
+the case since humans primarily understand concepts in terms of metaphors, and thus it is decidedly tricky to find a
+metaphor for metaphors themselves. While the study of broccoli as a recursive object is relatively straightforward, the
+study of how we study things, despite also being a recursive object, is significantly more slippery.
+
+At its core, category theory is the study of relationships between objects, with absolutely no limits on what
+constitutes an ``object''. Category theory is sufficiently applicable that its techniques can be used to study the theory
+itself. It plays a foundational role in all of mathematics, and to date remains as the most mind-crushingly meta thing
+the author has ever encountered.
+
+\newpage
+\section{Introduction}
+
+As has become the norm for this book, we will first discuss an informal example which demonstrates the underlying
+concepts in a hopefully more intuitive way, in an attempt to provide some motivation as to why we are doing what we are
+doing.
+
+Take for example, the distinction between \value{the act of chewing and swallowing food} \typeof \type{Action}, and the
+linguistic verb \value{``to eat''} \typeof \type{Word}. It is clear that there is at least one relationship between the
+act and the word, likely many; one of these relationships is the relationship \textit{the word for eating is ``to eat''}.
+Completely analogously, we have the act of sleeping, and the verb \value{``to sleep''} \typeof \type{Word}, with the
+relationship \textit{the word for sleeping is ``to sleep''}. The \textit{relationship between these two relationships} is
+nicely tied up with the language of our previous foray into type theory: a function.
+
+$$\func{wordFor} \typeof \type{Action} \to \type{Word}$$
+
+However, this line of reasoning might make little sense to Jacques, a patriotic Frenchman who speaks no English. To him,
+the word for for chewing and swallowing food is \value{``manger''} \typeof \type{Mot}, while the word for the act of
+sleeping is \value{``dormir''} \typeof \type{Mot}. Our \foreign{bon ami}, Jacques, might describe this relationship as a
+function:
+
+$$\func{motDe} \typeof \type{Action} \to \type{Mot}$$
+
+Luckily for us, we can still communicate with Jacques, even though he speaks no English, and the solution is simple: we
+simply need to translate what we want to say to French first. We can formalize this with yet another function:
+
+$$ \func{translateToFrench} \typeof (\type{Action} \to \type{Word}) \to (\type{Action} \to \type{Mot}) $$
+
+Take a second to notice the type of this function--it is a transformation of functions to functions. Since our function
+notation will, as we will see, quickly become too verbose, we can instead represent this same relationship in the form
+of a diagram:
+
+$$\begin{tikzcd}
+    \value{eating} \arrow[swap]{dd}{\func{wordFor}} & {} & \value{eating} \arrow{dd}{\func{motDe}} \\
+    {} \arrow[squiggly]{rr}{translateToFrench}      & {} & {} \\
+    \value{``to eat''}                                & {} & \value{``manger''}
+\end{tikzcd}$$
+
+This diagram says the same thing as our \func{translateToFrench} function. The straight arrows are still functions,
+though on either side of them are the \textit{values} under transformation, rather than the \textit{types} in the
+functional notation. The squiggly arrow indicates a ``function-function'', or \textit{functor}.
+
+\defn{functor}{A \what is a function of type $\type{Functor} = (\type{A} \to \type{B}) \to (\type{C} \to \type{D})$, in
+other words, a function which transforms functions into functions.}\change{this is false -- it also needs to map
+objects}
+
+Now consider the need to communicate with Joaquin, a Spaniard who doesn't speak any English. Analogously to
+communicating with Jacques, we must first translate our thoughts to Spanish. Notice the use of the word ``analogously'' in
+the previous sentence--this usually implies a transformation. We can draw the resulting relationship again in the form
+of a diagram:
+
+$$\begin{tikzcd}
+    \value{English} \arrow[swap]{dd}{\func{translateToFrench}} & {} & \value{English} \arrow{dd}{\func{translateToSpanish}} \\
+    {} \arrow[squiggly]{rr}{translate}      & {} & {} \\
+    \value{French}                                & {} & \value{Spanish}
+\end{tikzcd}$$
+
+What this is saying is "there is an operation analogous to translating from English to French for translating from
+English to Spanish`` not ''translating between these two languages is the same". It's got the same sort of \textit{general
+shape} to it, but it's not the same thing.
+
+This what category theory is: a way of demonstrating that the relationships between things have a similar shape to the
+relationships between different things. It's a way of finding patterns between disparate things, and a way of finding
+patterns in those patterns. In short, category theory is the unifying language of abstraction that we have so focused on
+throughout this book.
+
+
+\section{What is a Category?}
+Studying category theory isn't likely to be very fruitful without an idea of what a category actually is, so we shall
+begin with that.
+
+\defn{category}{A \what is a collection of objects and a collection of arrows between those objects.}
+
+This definition, like always, is unhelpfully broad, though that is the reason for its high degree of applicability. In
+an attempt to nail down what a category is, you can consider the objects to be ``things we want to talk about'', and the
+arrows to be ``the relationships we care about between those objects''. In a sense, the objects of a category form an
+``interest''-space, with the arrows being a salient feature between them.
+
+For example, consider a category whose objects are a union of \type{Person}s and \type{Gift}s, with arrows
+$\func{inLoveWith} \typeof \type{Person} \to \type{Person}$ and $\func{wouldMostEnjoy} \typeof \type{Person} \to
+\type{Gift}$, assuming monogamy (which is to say that each \type{Person} is in love with only one \type{Person}).
+
+\subtle{The objects in a category do not need to belong to the same type}
+
+Such a category allows us to ask questions like ``whom does \value{Juan} love?'' (by evaluating
+$\func{inLoveWith}(\value{Juan})$), and ``what should Miranda buy for her anniversary?'' (by evaluating
+$(\func{wouldMostEnjoy}\circ\func{inLoveWith})(\value{Miranda})$\footnote{The notation $(f\circ g)(x)$ is equivalent to
+    $f(g(x))$. In this example, we are asking ``what gift would the person Miranda loves most enjoy?''.})
+
+The symbol $\circ$ is known as the ``composition operator'', and $f\circ g$ is to be read ``$f$ composed with $g$''. By
+the definition of a category, the composition of two arrows $f$ and $g$ is meaningful whenever the \textit{target
+object} of $f$ is the same as the \textit{source object} of $g$,\missing{define source and target of arrows earlier} and
+that this composition itself is an arrow in the category\footnote{Implying that we can compose any number of arrows
+together, and the result always be meaningful.}.
+
+
+
+
 
 
 \end{document}
